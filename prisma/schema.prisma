@@ -1,0 +1,24 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Breed {
+  id     String       @id @default(uuid())
+  name   String
+  images BreedImage[]
+}
+
+model BreedImage {
+  id      String  @id @default(uuid())
+  href    String
+  Breed   Breed?  @relation(fields: [breedId], references: [id])
+  breedId String?
+}
